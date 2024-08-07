@@ -184,7 +184,8 @@
                                                     </li>
                                                 </ul>
                                             </li>
-                                            <li><a href="shop.html">shop <i class="fa fa-angle-down"></i></a>
+                                            <li><a href="{{ route('product') }}">shop <i
+                                                        class="fa fa-angle-down"></i></a>
                                                 <ul class="dropdown">
                                                     <li><a href="#">shop grid layout <i
                                                                 class="fa fa-angle-right"></i></a>

@@ -119,14 +119,16 @@
                                         text: data.message,
                                         icon: "success"
                                     });
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 1000);
                                 } else if (data.status == 'error') {
                                     Swal.fire({
-                                        title: "Deleted!",
+                                        title: "Can Delete!",
                                         text: data.message,
-                                        icon: "success"
+                                        icon: "error"
                                     });
                                 }
-                                window.location.reload();
                             },
                             error: function(xhr, status, error) {
                                 console.log(error);

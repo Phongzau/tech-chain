@@ -39,6 +39,9 @@ Route::get('/list-cart', [CartController::class, 'listCart'])->name('cart.list')
 Route::post('/add-to-cart', [CartController::class, 'addCart'])->name('cart.add');
 Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.update');
 
+/** Product Routes*/
+Route::get('/product', [ProductController::class, 'listSanPham'])->name('product');
+
 /** Admin Routes */
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('login', [AdminController::class, 'showFormLogin'])->name('login');

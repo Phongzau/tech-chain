@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function listSanPham()
+    {
+        $products = SanPham::query()->where('is_type', 1)->get();
+        return view('client.sanphams.sanpham', compact(['products']));
+    }
     public function detailSanPham(string $id)
     {
         $sanPham = SanPham::query()->findOrFail($id);
