@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DanhMucRequest;
 use App\Models\DanhMuc;
+use App\Models\SanPham;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +17,8 @@ class DanhMucController extends Controller
      */
     public function index()
     {
+        // $sanPham = SanPham::query()->where('danh_muc_id', 1)->count();
+        // dd($sanPham);
         $title = 'Danh mục sản phẩm';
         $listDanhMuc = DanhMuc::orderByDesc('trang_thai')->get();
         return view('admin.danhmuc.index', compact(['title', 'listDanhMuc']));
@@ -73,8 +76,6 @@ class DanhMucController extends Controller
      */
     public function update(DanhMucRequest $request, string $id)
     {
-
-
         if ($request->isMethod('PUT')) {
             $param = $request->except('_token');
             $danhMuc = DanhMuc::findOrFail($id);
@@ -102,14 +103,21 @@ class DanhMucController extends Controller
     public function destroy(string $id)
     {
         $danhMuc = DanhMuc::findOrFail($id);
-        if ($danhMuc->hinh_anh && Storage::disk('public')->exists($danhMuc->hinh_anh)) {
-            Storage::disk('public')->delete($danhMuc->hinh_anh);
+        $sanPham = SanPham::query()->where('danh_muc_id', $id)->count();
+        if ($sanPham > 0) {
+            return response([
+                'status' => 'error',
+                'message' => 'Bạn phải xóa những sản phẩm tồn tại trong danh mục trước khi xóa danh mục',
+            ]);
+        } else {
+            if ($danhMuc->hinh_anh && Storage::disk('public')->exists($danhMuc->hinh_anh)) {
+                Storage::disk('public')->delete($danhMuc->hinh_anh);
+            }
+            $danhMuc->delete();
+            return response([
+                'status' => 'success',
+                'message' => 'Xóa thành công',
+            ]);
         }
-        $danhMuc->delete();
-
-        return response([
-            'status' => 'success',
-            'message' => 'Xóa thành công',
-        ]);
     }
 }
