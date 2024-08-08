@@ -130,7 +130,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <a href="checkout.html" class="btn btn-sqr d-block">Proceed Checkout</a>
+                            <a href="{{ route('don-hang.create') }}" class="btn btn-sqr d-block">Proceed Checkout</a>
                         </div>
                     </div>
                 </div>

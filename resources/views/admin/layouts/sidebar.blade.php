@@ -57,6 +57,12 @@
                                 <span> Sản phẩm</span>
                             </a>
                         </li>
+
+                        <li>
+                            <a class='tp-link' href='{{ route('admin.don-hang.index') }}'><i data-feather="package"></i>
+                                <span> Đơn hàng</span>
+                            </a>
+                        </li>
                     </ul>
 
                 </div>
