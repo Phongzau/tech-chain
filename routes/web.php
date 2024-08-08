@@ -3,9 +3,11 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\DanhMucController;
+use App\Http\Controllers\Backend\DonHangController;
 use App\Http\Controllers\Backend\SanPhamController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController as FrontendHomeController;
+use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Middleware\CheckRoleAdminMiddleware;
@@ -42,6 +44,13 @@ Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.u
 /** Product Routes*/
 Route::get('/product', [ProductController::class, 'listSanPham'])->name('product');
 
+Route::middleware('auth')
+    ->group(function () {
+        Route::resource('don-hang', OrderController::class);
+    });
+
+
+
 /** Admin Routes */
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('login', [AdminController::class, 'showFormLogin'])->name('login');
@@ -54,4 +63,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
         Route::resource('san-pham', SanPhamController::class);
     });
+
+    Route::resource('don-hang', DonHangController::class);
 });
